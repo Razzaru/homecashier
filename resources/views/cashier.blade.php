@@ -3,6 +3,18 @@
     <link rel="stylesheet" href="/css/app.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <style>
+        .parentDisable {
+            position:fixed;
+            top:0;
+            left:0;
+            background:#000;
+            opacity:0.8;
+            z-index:998;
+            height:100%;
+            width:100%;
+        }
+    </style>
 </head>
 
 <body ng-app="cashier">
@@ -80,12 +92,16 @@
         var self = this;
 
         this.categories = [
-            {name: "Food"},
-            {name: "Bus"},
-            {name: "Alcohol"}
+            {name: "Еда"},
+            {name: "Проезды"},
+            {name: "Алкоголь"},
+            {name: "Электроника"},
+            {name: "Мебель"},
+            {name: "Посуда"}
         ];
 
         this.isShowed = false;
+        this.monthMoney = 30000;
         this.now = new Date().toLocaleDateString();
 
         if (localStorage.getItem('spendingItems') != null) {
@@ -116,30 +132,15 @@
             return total;
         };
 
-        this.countFood = function () {
-            var total = 0;
-            for (var i = 0; i < this.spendingItems.length; i++) {
-                if (this.spendingItems[i].category === "Food") {
-                    total += parseInt(this.spendingItems[i].price);
-                }
-            }
-            return total;
-        };
+        this.clearAll = function () {
+            localStorage.clear();
+            window.location.reload(false);
+        }
 
-        this.countBus = function () {
+        this.countCat = function (cat) {
             var total = 0;
             for (var i = 0; i < this.spendingItems.length; i++) {
-                if (this.spendingItems[i].category === "Bus") {
-                    total += parseInt(this.spendingItems[i].price);
-                }
-            }
-            return total;
-        };
-
-        this.countAlcohol = function () {
-            var total = 0;
-            for (var i = 0; i < this.spendingItems.length; i++) {
-                if (this.spendingItems[i].category === "Alcohol") {
+                if (this.spendingItems[i].category == cat) {
                     total += parseInt(this.spendingItems[i].price);
                 }
             }
@@ -158,6 +159,12 @@
         };
 
         this.dates = this.lastSixDays();
+
+        this.percentage = function () {
+            var percent = this.monthMoney / 100;
+
+            return this.totalPrice()/percent;
+        }
 
 
         this.addItem = function () {

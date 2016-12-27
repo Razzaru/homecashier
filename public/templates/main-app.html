@@ -9,23 +9,35 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Home Cashier</a>
+                <a class="navbar-brand" href="#">Небольшая домашняя бухгалтерия</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="" ng-click="empty">Spending and statistics</a></li>
+                    <li class="active"><a href="" ng-click="empty">Траты и статистика</a></li>
+                    <li class=""><a href="" ng-click="cashier.popupShown=true">Обнулить</a></li>
                 </ul>
             </div><!--/.nav-collapse -->
         </div>
     </nav>
     <div class="container">
         <div class="row">
-            <div class="col-lg-4 col-sm-4 col-md-4">
+            <div class="col-lg-4 col-md-4">
                 <add-bar></add-bar>
             </div>
-            <div class="col-lg-8 col-md-8 col-sm-8">
+            <div class="col-lg-8 col-md-8">
                 <statistics total="cashier.total"></statistics>
             </div>
         </div>
     </div>
 </main>
+
+<div class="popup" ng-show="cashier.popupShown">
+    <div class="parentDisable"></div>
+    <div class="well" style="position: absolute; z-index: 999; left: 825px; top:53px;">
+        <div class="page-header">
+            <h4>Вы точно хотите обнулить?</h4>
+            <button class="btn btn-danger" ng-click="cashier.clearAll(); cashier.popupShown=false">Да, точно</button>
+            <button class="btn btn-info" ng-click="cashier.popupShown=false">Нет, я передумал</button>
+        </div>
+    </div>
+</div>

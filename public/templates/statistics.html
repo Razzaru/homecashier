@@ -1,23 +1,27 @@
 <div class="panel panel-default">
     <div class="panel-heading">
-        <h4>К {{ cashier.now }} потрачено {{ cashier.total }} рублей<small class="pull-right">Сумма на месяц: 30000</small></h4>
+        <h4>К {{ cashier.now }} потрачено {{ cashier.total }} рублей<small class="pull-right">Сумма на месяц: {{ cashier.monthMoney }}</small></h4>
     </div>
     <div class="panel-body">
     <div class="progress">
-        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="{{ cashier.percentage() }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ cashier.percentage() }}%">
         {{ cashier.totalPrice() }}
         </div>
-        <p class="text-center">20%</p>
+        <p class="text-center">{{ cashier.monthMoney - cashier.totalPrice() }}</p>
     </div>
         <div class="page-header">
-            <h4>Из них:</h4>
+            <button class="btn btn-info" style="width: 49%" ng-click="cashier.fullStatistics=true">Подробнее</button>
+            <button class="btn btn-warning" style="width: 49%" ng-click="cashier.fullStatistics=false">Скрыть</button>
         </div>
-        <ul class="list-group">
-            <li class="list-group-item list-group-item-success">Еда: {{ cashier.countFood() }}</li>
-            <li class="list-group-item list-group-item-info">Проезды: {{ cashier.countBus() }}</li>
-            <li class="list-group-item list-group-item-warning">Алкоголь: {{ cashier.countAlcohol() }}</li>
+        <ul class="list-group" ng-show="cashier.fullStatistics">
+            <li class="list-group-item list-group-item-success">Еда: {{ cashier.countCat('Еда') }}</li>
+            <li class="list-group-item list-group-item-info">Проезды: {{ cashier.countCat('Проезды') }}</li>
+            <li class="list-group-item list-group-item-warning">Алкоголь: {{ cashier.countCat('Алкоголь') }}</li>
+            <li class="list-group-item list-group-item-success">Электроника: {{ cashier.countCat('Электроника') }}</li>
+            <li class="list-group-item list-group-item-info">Мебель: {{ cashier.countCat('Мебель') }}</li>
+            <li class="list-group-item list-group-item-warning">Посуда: {{ cashier.countCat('Посуда') }}</li>
         </ul>
-        <div class="days">
+        <div class="days hidden-xs hidden-sm">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="">{{cashier.now}}</a></li>
                 <li ng-repeat="date in cashier.dates"><a href="">{{ date.toLocaleDateString() }}</a></li>
