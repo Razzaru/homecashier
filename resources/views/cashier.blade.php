@@ -1,6 +1,9 @@
 <html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/app.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
@@ -14,16 +17,14 @@
             height:100%;
             width:100%;
         }
+
+        
     </style>
 </head>
 
 <body ng-app="cashier">
 <main-app></main-app>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-        integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-        crossorigin="anonymous"></script>
 <script>
 
     var app = angular.module('cashier', []);
@@ -77,7 +78,10 @@
             templateUrl: '/templates/statistics.html',
             priority: 1001,
             scope: {
-                total: '=total'
+                total: '=total',
+                monthMoney: '=monthMoney',
+                date: '=date',
+                percentage: '=percentage'
             },
             controller: CashierController,
             controllerAs: 'cashier'
@@ -112,6 +116,15 @@
 
         var now = new Date();
 
+        this.getItems = function (date) {
+            var items = [];
+            for(var i = 0; i<this.spendingItems.length;i++) {
+                if(this.spendingItems[i].date === date) {
+                    items.push(this.spendingItems[i]);
+                }
+            }
+            return items;
+        };
 
         if (now.getDate() === 1) {
             if (localStorage.getItem('isReseted') == null) {
@@ -131,6 +144,10 @@
             }
             return total;
         };
+
+        var i = this.totalPrice();
+
+        this.total = i;
 
         this.clearAll = function () {
             localStorage.clear();
@@ -165,6 +182,10 @@
 
             return this.totalPrice()/percent;
         }
+
+        var p = this.percentage();
+
+        this.percents = p;
 
 
         this.addItem = function () {
