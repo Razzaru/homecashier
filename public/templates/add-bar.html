@@ -1,0 +1,27 @@
+ <div class="panel panel-default">
+        <div class="panel-heading">
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Name</span>
+                <input type="text" class="form-control" placeholder="Name of item" aria-describedby="basic-addon1" ng-model="cashier.name">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Price</span>
+                <input type="text" class="form-control" placeholder="Price of item" aria-describedby="basic-addon1" ng-model="cashier.price">
+            </div>
+            <br>
+            <select class="form-control" style="width: 100%" ng-model="cashier.category">\
+                <option value="" selected>--Select--</option>
+                <option ng-repeat="category in cashier.categories" value="{{ category.name }}">{{ category.name }}</option>
+            </select>
+            <br>
+            <button class="btn btn-info" style="width: 100%" ng-click="cashier.addItem()">Add!</button>
+            <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=true">Show my spends</button>
+            <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=false">Hide my spends</button>
+        </div>
+        <div class="panel-body" ng-show="cashier.isShowed">
+            <ul class="list-group">
+                <spending-item ng-repeat="item in cashier.spendingItems track by $index"></spending-item>
+            </ul>
+        </div>
+    </div>

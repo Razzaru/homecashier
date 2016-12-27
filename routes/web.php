@@ -12,5 +12,7 @@
 */
 
 Route::get('/', function () {
+    \Illuminate\Support\Facades\Blade::setContentTags('<%', '%>');
+    \Illuminate\Support\Facades\Blade::setEscapedContentTags('<%%', '%%>');
     return view('cashier');
 });
