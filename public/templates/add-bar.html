@@ -21,7 +21,7 @@
         </div>
         <div class="panel-body" ng-show="cashier.isShowed">
             <ul class="list-group">
-                <spending-item ng-repeat="item in cashier.spendingItems | reverse"></spending-item>
+                <spending-item ng-repeat="item in cashier.spendingItems track by $index"></spending-item>
             </ul>
         </div>
     </div>

@@ -144,11 +144,9 @@
             var items = [];
             for(var i = 0; i<this.spendingItems.length;i++) {
                 if(new Date(Date.parse(this.spendingItems[i].date)).getDate() === now.getDate()) {
-                    console.log(this.spendingItems[i]);
                     items.push(this.spendingItems[i]);
                 }
             }
-            console.log(items);
             return items;
         };
 
@@ -230,7 +228,6 @@
         this.addItem = function () {
 
             var date = new Date();
-            date.setHours(0,0,0,0);
 
             this.spendingItems.push({
                 name: self.name,
@@ -240,14 +237,11 @@
             });
             this.isShowed = true;
 
-            console.log(this.spendingItems[0].date);
-            console.log(now);
-
             this.totalPrice();
 
             var tmp = JSON.stringify(this.spendingItems);
 
-            localStorage.clear();
+            localStorage.removeItem('spendingItems');
             localStorage.setItem('spendingItems', tmp);
         }
     }
