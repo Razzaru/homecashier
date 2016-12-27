@@ -14,7 +14,7 @@
         </div>
         <div class="page-header">
             <button class="btn btn-info" style="width: 49%" ng-click="cashier.fullStatistics=true">Подробнее</button>
-            <button class="btn btn-warning" style="width: 49%" ng-click="cashier.fullStatistics=false">Скрыть</button>
+            <button class="btn btn-danger" style="width: 49%" ng-click="cashier.fullStatistics=false">Скрыть</button>
         </div>
         <ul class="list-group" ng-show="cashier.fullStatistics">
             <li class="list-group-item list-group-item-success">Еда: {{ cashier.countCat('Еда') }}</li>
@@ -33,6 +33,7 @@
                 <div class="well" style="margin-top: 10px">
                     <ul class="list-group">
                         <li class="list-group-item" ng-repeat="item in cashier.getItems(cashier.now)">{{item.name}}: {{ item.price }}</li>
+                        <li class="list-group-item list-group-item-warning">Общая сумма за день: {{ cashier.dayCount() }}</li>
                     </ul>
                 </div>
         </div>
