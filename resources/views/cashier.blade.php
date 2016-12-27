@@ -18,7 +18,17 @@
             width:100%;
         }
 
-        
+        .nulling {
+            position: absolute; z-index: 999; left: 825px; top:53px;
+        }
+
+        @media(max-width: 768px) {
+            .nulling {
+                left:auto;
+                right:50px;
+            }
+        }
+
     </style>
 </head>
 
