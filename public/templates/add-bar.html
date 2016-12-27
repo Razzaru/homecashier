@@ -15,7 +15,7 @@
                 <option ng-repeat="category in cashier.categories" value="{{ category.name }}">{{ category.name }}</option>
             </select>
             <br>
-            <button class="btn btn-info" style="width: 100%" ng-click="cashier.addItem()">Add!</button>
+            <button class="btn btn-info" style="width: 100%" ng-click="cashier.addItem(); count()">Add!</button>
             <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=true">Show my spends</button>
             <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=false">Hide my spends</button>
         </div>

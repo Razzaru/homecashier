@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+    <div class="panel-heading">
+        <h3>К 27.12.2016 мы потратили уже 26000</h3>
+    </div>
+    <div class="panel-body">
+    <div class="progress">
+        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%" ng-model="cashier.totalPrice()">
+        {{ cashier.total }}
+        </div>
+        <p class="text-center">20%</p>
+    </div>
+        <div class="page-header">
+            <h4>Из них:</h4>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item list-group-item-success">Еда: 10000</li>
+            <li class="list-group-item list-group-item-info">Проезды: 5000</li>
+            <li class="list-group-item list-group-item-warning">Алкоголь: 9000000</li>
+        </ul>
+        <div class="days">
+            <ul class="nav nav-tabs">
+                <li ng-repeat="date in cashier.lastSixDays()"><a href=""></a></li>
+                <li role="presentation" class="active"><a href="">Sample Text</a></li>
+                <li role="presentation"><a href="">Sample Text</a></li>
+                <li role="presentation"><a href="">Sample Text</a></li>
+                <li role="presentation"><a href="">Sample Text</a></li>
+                <li role="presentation"><a href="">Sample Text</a></li>
+                <li role="presentation"><a href="">Sample Text</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
