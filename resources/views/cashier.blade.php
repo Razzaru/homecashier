@@ -99,6 +99,12 @@
     }
     ;
 
+    app.filter('reverse', function() {
+        return function(items) {
+            return items.slice().reverse();
+        };
+    });
+
 
     app.controller('CashierController', CashierController);
 
@@ -116,7 +122,9 @@
 
         this.isShowed = false;
         this.monthMoney = 30000;
-        this.now = new Date().toLocaleDateString();
+        this.now = new Date();
+        this.now.setHours(0,0,0,0);
+        this.date = this.now;
 
         if (localStorage.getItem('spendingItems') != null) {
             this.spendingItems = JSON.parse(localStorage.getItem('spendingItems'));
@@ -124,17 +132,33 @@
             this.spendingItems = [];
         }
 
+        if (localStorage.getItem('monthMoney') != null) {
+            this.monthMoney = parseInt(localStorage.getItem('monthMoney'));
+        } else {
+            this.monthMoney = 0;
+        }
+
         var now = new Date();
 
         this.getItems = function (date) {
             var items = [];
             for(var i = 0; i<this.spendingItems.length;i++) {
-                if(this.spendingItems[i].date === date) {
+                if(new Date(Date.parse(this.spendingItems[i].date)).getDate() === now.getDate()) {
+                    console.log(this.spendingItems[i]);
                     items.push(this.spendingItems[i]);
                 }
             }
+            console.log(items);
             return items;
         };
+
+        this.active = now;
+        this.filteredItems;
+
+        this.setActive = function(date) {
+            this.active = date;
+            this.filteredItems = this.getItems(date);
+        }
 
         if (now.getDate() === 1) {
             if (localStorage.getItem('isReseted') == null) {
@@ -161,6 +185,11 @@
 
         this.clearAll = function () {
             localStorage.clear();
+            window.location.reload(false);
+        }
+
+        this.refreshMonthMoney = function () {
+            localStorage.setItem('monthMoney', this.monthMoney);
             window.location.reload(false);
         }
 
@@ -201,6 +230,7 @@
         this.addItem = function () {
 
             var date = new Date();
+            date.setHours(0,0,0,0);
 
             this.spendingItems.push({
                 name: self.name,
@@ -209,6 +239,9 @@
                 date: date
             });
             this.isShowed = true;
+
+            console.log(this.spendingItems[0].date);
+            console.log(now);
 
             this.totalPrice();
 

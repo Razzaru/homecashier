@@ -16,12 +16,12 @@
             </select>
             <br>
             <button class="btn btn-info" style="width: 100%" ng-click="cashier.addItem(); count()">Добавить!</button>
-            <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=true">Показать</button>
-            <button class="btn btn-danger" style="width: 49.3%; margin-top: 10px" ng-click="cashier.isShowed=false">Спрятать</button>
+            <button class="btn btn-danger" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=true">Показать</button>
+            <button class="btn btn-danger" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=false">Спрятать</button>
         </div>
         <div class="panel-body" ng-show="cashier.isShowed">
             <ul class="list-group">
-                <spending-item ng-repeat="item in cashier.spendingItems track by $index"></spending-item>
+                <spending-item ng-repeat="item in cashier.spendingItems | reverse"></spending-item>
             </ul>
         </div>
     </div>
