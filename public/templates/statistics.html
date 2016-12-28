@@ -70,14 +70,21 @@
             <div class="days hidden-xs hidden-sm">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="">{{cashier.now.toLocaleDateString() }}</a></li>
-                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.log()" ui-sref="date">{{
+                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.log()">{{
                         date.toLocaleDateString() }}</a></li>
                 </ul>
+                <ul class="list-group" style="margin-top: 30px" ng-show="cashier.getItems(cashier.date).length>0">
+                    <li class="list-group-item" ng-repeat="item in cashier.getItems(cashier.date) track by $index">
+                        {{item.name}}: {{ item.price }} <span class="badge">{{ item.category }}</span></li>
+                    <li class="list-group-item list-group-item-warning">Общая сумма за день: {{ cashier.dayCount() }}
+                    </li>
+                </ul>
 
+                <!--
                 <div ui-view>
 
                 </div>
-
+                -->
             </div>
         </div>
     </div>
