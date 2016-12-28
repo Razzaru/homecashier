@@ -28,19 +28,6 @@ function SpendingItem() {
 }
 ;
 
-app.directive('addBar', AddBar);
-
-function AddBar() {
-    return {
-        restrict: 'E',
-        templateUrl: '/templates/add-bar.html',
-        scope: {},
-        controller: CashierController,
-        controllerAs: 'cashier'
-    };
-}
-;
-
 app.directive('statistics', Statistics);
 
 function Statistics() {
@@ -48,12 +35,7 @@ function Statistics() {
         restrict: 'E',
         templateUrl: '/templates/statistics.html',
         priority: 1001,
-        scope: {
-            total: '=total',
-            monthMoney: '=monthMoney',
-            date: '=date',
-            percentage: '=percentage'
-        },
+        scope: true,
         controller: CashierController,
         controllerAs: 'cashier'
     };
@@ -79,7 +61,8 @@ function CashierController($http) {
         {name: "Алкоголь"},
         {name: "Электроника"},
         {name: "Мебель"},
-        {name: "Посуда"}
+        {name: "Посуда"},
+        {name: "Другое"}
     ];
 
     this.isShowed = false;

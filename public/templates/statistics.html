@@ -1,3 +1,36 @@
+
+<div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Название</span>
+            <input type="text" class="form-control" placeholder="Что купили?" aria-describedby="basic-addon1" ng-model="cashier.name">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Цена</span>
+            <input type="text" class="form-control" placeholder="Сколько стоило?" aria-describedby="basic-addon1" ng-model="cashier.price">
+        </div>
+        <br>
+        <select class="form-control" style="width: 100%" ng-model="cashier.category">\
+            <option value="" selected>--Выберите категорию--</option>
+            <option ng-repeat="category in cashier.categories" value="{{ category.name }}">{{ category.name }}</option>
+        </select>
+        <br>
+        <button class="btn btn-info" style="width: 100%" ng-click="cashier.addItem(); count()">Добавить!</button>
+        <button class="btn btn-danger" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=true">Показать</button>
+        <button class="btn btn-danger" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=false">Спрятать</button>
+    </div>
+</div>
+
+<div class="panel-body" ng-show="cashier.isShowed">
+    <ul class="list-group">
+        <spending-item ng-repeat="item in cashier.spendingItems track by $index"></spending-item>
+    </ul>
+</div>
+
+</div>
+<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 <div class="panel panel-default">
     <div class="panel-heading">
         <h4>К {{ cashier.now.toLocaleDateString() }} потрачено {{ cashier.total }} рублей
@@ -23,6 +56,7 @@
             <li class="list-group-item list-group-item-success">Электроника: {{ cashier.countCat('Электроника') }}</li>
             <li class="list-group-item list-group-item-info">Мебель: {{ cashier.countCat('Мебель') }}</li>
             <li class="list-group-item list-group-item-warning">Посуда: {{ cashier.countCat('Посуда') }}</li>
+            <li class="list-group-item list-group-item-success">Другое: {{ cashier.countCat('Другое') }}</li>
         </ul>
         <div class="days hidden-xs hidden-sm">
             <ul class="nav nav-tabs">
@@ -32,10 +66,11 @@
 
                 <div class="well" style="margin-top: 10px">
                     <ul class="list-group">
-                        <li class="list-group-item" ng-repeat="item in cashier.getItems(cashier.now)">{{item.name}}: {{ item.price }}</li>
+                        <li class="list-group-item" ng-repeat="item in cashier.getItems(cashier.now) track by $index">{{item.name}}: {{ item.price }} <span class="badge">{{ item.category }}</span></li>
                         <li class="list-group-item list-group-item-warning">Общая сумма за день: {{ cashier.dayCount() }}</li>
                     </ul>
                 </div>
         </div>
     </div>
 </div>
+    </div>
