@@ -1,4 +1,4 @@
-var app = angular.module('cashier', []);
+var app = angular.module('cashier', ['ui.router']);
 
 app.directive('mainApp', MainApp);
 
@@ -57,7 +57,7 @@ function CashierController($http) {
 
     this.categories = [
         {name: "Еда"},
-        {name: "Проезды"},
+        {name: "Проезды"}, 
         {name: "Алкоголь"},
         {name: "Электроника"},
         {name: "Мебель"},
@@ -72,6 +72,10 @@ function CashierController($http) {
     this.date = this.now;
 
     this.active = this.now;
+
+    this.log = function () {
+        console.log(this.date);
+    }
 
     this.filteredItems;
 
