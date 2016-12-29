@@ -1,4 +1,4 @@
-var app = angular.module('cashier', [/*'ui.router'*/]);
+var app = angular.module('cashier', ['ui.router']);
 
 app.directive('mainApp', MainApp);
 

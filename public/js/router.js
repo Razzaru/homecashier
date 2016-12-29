@@ -1,4 +1,3 @@
-/*
 var app = angular.module('cashier');
 
 app.config(function($stateProvider) {
@@ -18,4 +17,3 @@ app.config(function($stateProvider) {
         })
 })
 
-*/
