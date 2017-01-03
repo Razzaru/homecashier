@@ -43,7 +43,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-chart.js/1.1.1/angular-chart.min.js"></script>
+<script src="https://use.fontawesome.com/8f0c2c9fd4.js"></script>
 <script src="/js/main.js"></script>
-<script src="/js/router.js"></script>
 </body>
 </html>

@@ -2,13 +2,13 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Название</span>
+                <span class="input-group-addon">Название</span>
                 <input type="text" class="form-control" placeholder="Что купили?" aria-describedby="basic-addon1"
                        ng-model="cashier.name">
             </div>
             <br>
             <div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Цена</span>
+                <span class="input-group-addon">Цена</span>
                 <input type="text" class="form-control" placeholder="Сколько стоило?" aria-describedby="basic-addon1"
                        ng-model="cashier.price">
             </div>
@@ -25,6 +25,30 @@
             </button>
             <button class="btn btn-default" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=false">
                 Спрятать
+            </button>
+            <button class="btn btn-default" style="width: 100%; margin-top: 10px" ng-click="cashier.showAdding=true">
+                Показать блок добавления денег
+            </button>
+        </div>
+    </div>
+
+    <div class="panel panel-default" ng-show="cashier.showAdding">
+        <div class="panel-body">
+            <div class="input-group">
+                <span class="input-group-addon">Название</span>
+                <input type="text" class="form-control" placeholder="Откуда деньги?" aria-describedby="basic-addon1"
+                       ng-model="cashier.addName">
+            </div>
+            <br>
+            <div class="input-group">
+                <span class="input-group-addon">Количество</span>
+                <input type="text" class="form-control" placeholder="Сколько получили?" aria-describedby="basic-addon1"
+                       ng-model="cashier.addMoney">
+            </div>
+            <br>
+            <button class="btn btn-default" style="width: 100%" ng-click="cashier.addMonthMoney">Добавить!</button>
+            <button class="btn btn-default" style="width: 100%; margin-top: 10px" ng-click="cashier.showAdding=false">
+                Скрыть этот блок
             </button>
         </div>
     </div>
@@ -74,15 +98,14 @@
             <hr>
             <div class="days hidden-xs hidden-sm">
                 <ul class="nav nav-tabs">
-                    <li class="active"><a href="">{{cashier.now.toLocaleDateString() }}</a></li>
-                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.getLastMonth()">{{
+                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(-cashier.dates.length)" class="fa fa-arrow-left"></a></li>
+                    <li ng-class="{'active': cashier.date.getDate()==date.getDate()}" ng-repeat="date in cashier.dates"><a href="#" ng-click="cashier.date=date">{{
                         date.toLocaleDateString() }}</a></li>
+                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(cashier.dates.length)" class="fa fa-arrow-right"></a></li>
                 </ul>
 
                 <date-sum></date-sum>
 
-                <div ui-view>
-                </div>
             </div>
         </div>
     </div>

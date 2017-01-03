@@ -1,4 +1,4 @@
-var app = angular.module('cashier', ['ui.router', 'chart.js']);
+var app = angular.module('cashier', ['chart.js']);
 
 app.directive('mainApp', MainApp);
 
@@ -126,6 +126,10 @@ function CashierController($http) {
         }
         return items;
     };
+    
+    this.addMonthMoney = function () {
+        console.log(this.addMoney);
+    }
 
     this.dayCount = function () {
         var count = 0;
@@ -181,7 +185,7 @@ function CashierController($http) {
 
     this.lastSixDays = function () {
         var dates = [];
-        for(var i = 1; i<=5; i++) {
+        for(var i = 0; i<=5; i++) {
             var date = new Date();
             var dd = date.getDate();
             date.setDate(dd - i);
@@ -190,16 +194,40 @@ function CashierController($http) {
         return dates;
     };
 
+    this.setNewActiveDates = function (int) {
+        if(localStorage.getItem('offset') != null) {
+            int += parseInt(localStorage.getItem('offset'))
+        }
+        var dates = [];
+        for(var i = int; i<=int+5; i++) {
+            var date = new Date();
+            var dd = date.getDate();
+            date.setDate(dd - i);
+            dates.push(date);
+        }
+        localStorage.setItem('offset', int);
+        this.dates = dates;
+    };
+
+    window.onbeforeunload = function() {
+        localStorage.removeItem('offset');
+        return '';
+    };
+
+    window.onunload = function() {
+        localStorage.removeItem('offset');
+        return '';
+    };
+
+
     this.dates = this.lastSixDays();
     
     this.strDates = this.dates.map(function (item) {
         return item.toLocaleDateString();
     })
-    this.strDates.unshift(this.now.toLocaleDateString());
     
     this.counts = function () {
         var dates = this.dates.slice(0);
-        dates.unshift(this.now);
         var data = dates.map(function (item) {
             return self.dayCountParam(item);
         })
@@ -238,7 +266,7 @@ function CashierController($http) {
 
     this.labels = this.strDates.reverse();
     this.series = ['Потрачено денег'];
-    this.data = [this.counts()];
+    this.data = [this.counts().reverse()];
     this.datasetOverride = [{ yAxisID: 'y-axis-1' }];
     this.options = {
         scales: {
