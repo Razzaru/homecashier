@@ -1,6 +1,14 @@
 <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
     <div class="panel panel-default">
-        <div class="panel-body">
+        <div class="panel-heading">
+            <button class="btn btn-default" ng-class="{'btn-primary': cashier.showFirst==true}" style="width: 49.1%"
+                    ng-click="cashier.showFirst=true; cashier.isShowedGains=false">Добавить трату
+            </button>
+            <button class="btn btn-default" ng-class="{'btn-primary': cashier.showFirst==false}" style="width: 49.1%"
+                    ng-click="cashier.showFirst=false; cashier.isShowed=false">Добавить доход
+            </button>
+        </div>
+        <div class="panel-body" ng-show="cashier.showFirst==true">
             <div class="input-group">
                 <span class="input-group-addon">Название</span>
                 <input type="text" class="form-control" placeholder="Что купили?" aria-describedby="basic-addon1"
@@ -26,14 +34,9 @@
             <button class="btn btn-default" style="width: 49.1%; margin-top: 10px" ng-click="cashier.isShowed=false">
                 Спрятать
             </button>
-            <button class="btn btn-default" style="width: 100%; margin-top: 10px" ng-click="cashier.showAdding=true">
-                Показать блок добавления денег
-            </button>
         </div>
-    </div>
 
-    <div class="panel panel-default" ng-show="cashier.showAdding">
-        <div class="panel-body">
+        <div class="panel-body" ng-show="cashier.showFirst==false">
             <div class="input-group">
                 <span class="input-group-addon">Название</span>
                 <input type="text" class="form-control" placeholder="Откуда деньги?" aria-describedby="basic-addon1"
@@ -46,19 +49,29 @@
                        ng-model="cashier.addMoney">
             </div>
             <br>
-            <button class="btn btn-default" style="width: 100%" ng-click="cashier.addMonthMoney">Добавить!</button>
-            <button class="btn btn-default" style="width: 100%; margin-top: 10px" ng-click="cashier.showAdding=false">
-                Скрыть этот блок
+            <button class="btn btn-default" style="width: 100%" ng-click="cashier.addMonthMoney(); cashier.addGain(); cashier.isShowedGains=true">
+                Добавить!
+            </button>
+            <button class="btn btn-default" style="width: 49.1%; margin-top: 10px"
+                    ng-click="cashier.isShowedGains=true">
+                Показать
+            </button>
+            <button class="btn btn-default" style="width: 49.1%; margin-top: 10px"
+                    ng-click="cashier.isShowedGains=false">
+                Спрятать
             </button>
         </div>
     </div>
-
     <div class="panel-body" ng-show="cashier.isShowed">
         <ul class="list-group">
             <spending-item ng-repeat="item in cashier.spendingItems track by $index"></spending-item>
         </ul>
     </div>
-
+<div class="panel-body" ng-show="cashier.isShowedGains">
+    <ul class="list-group">
+        <spending-item ng-repeat="item in cashier.gains track by $index"></spending-item>
+    </ul>
+</div>
 </div>
 <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
     <div class="panel panel-default">
@@ -98,10 +111,14 @@
             <hr>
             <div class="days hidden-xs hidden-sm">
                 <ul class="nav nav-tabs">
-                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(-cashier.dates.length)" class="fa fa-arrow-left"></a></li>
-                    <li ng-class="{'active': cashier.date.getDate()==date.getDate()}" ng-repeat="date in cashier.dates"><a href="#" ng-click="cashier.date=date">{{
-                        date.toLocaleDateString() }}</a></li>
-                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(cashier.dates.length)" class="fa fa-arrow-right"></a></li>
+                    <li style="width: 41px"><a href="" class="fa fa-times-circle" ng-show="!cashier.offset"></a></li>
+                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(-cashier.dates.length)"
+                                               class="fa fa-arrow-left" ng-show="cashier.offset>0"></a></li>
+                    <li ng-class="{'active': cashier.date.getDate()==date.getDate()}" ng-repeat="date in cashier.dates">
+                        <a href="#" ng-click="cashier.date=date">{{
+                            date.toLocaleDateString() }}</a></li>
+                    <li style="width: 41px"><a href="#" ng-click="cashier.setNewActiveDates(cashier.dates.length)"
+                                               class="fa fa-arrow-right"></a></li>
                 </ul>
 
                 <date-sum></date-sum>

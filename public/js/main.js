@@ -88,11 +88,19 @@ function CashierController($http) {
 
     this.active = this.now;
 
+    this.showFirst = true;
+
     this.log = function () {
         console.log(this.date);
     }
 
     this.filteredItems;
+
+    if (localStorage.getItem('gains') != null) {
+        this.gains = JSON.parse(localStorage.getItem('gains'));
+    } else {
+        this.gains = [];
+    }
 
     if (localStorage.getItem('spendingItems') != null) {
         this.spendingItems = JSON.parse(localStorage.getItem('spendingItems'));
@@ -121,14 +129,31 @@ function CashierController($http) {
         var items = [];
         for(var i = 0; i<this.spendingItems.length;i++) {
             if(new Date(Date.parse(this.spendingItems[i].date)).getDate() === date.getDate()) {
-                items.push(this.spendingItems[i]);
+                if(new Date(Date.parse(this.spendingItems[i].date)).getMonth() === date.getMonth()) {
+                    items.push(this.spendingItems[i]);
+                }
             }
         }
         return items;
     };
     
     this.addMonthMoney = function () {
-        console.log(this.addMoney);
+        this.monthMoney += parseInt(this.addMoney);
+        localStorage.setItem('monthMoney', this.monthMoney);
+    }
+
+    this.addGain = function () {
+        var date = new Date();
+
+        this.gains.push({
+            name: self.addName,
+            price: self.addMoney,
+            date: date
+        });
+
+        var tmp = JSON.stringify(this.gains);
+        localStorage.removeItem('gains');
+        localStorage.setItem('gains', tmp);
     }
 
     this.dayCount = function () {
@@ -205,13 +230,13 @@ function CashierController($http) {
             date.setDate(dd - i);
             dates.push(date);
         }
-        localStorage.setItem('offset', int);
+        if (int !== 0) {
+            localStorage.setItem('offset', int);
+        } else {
+            localStorage.removeItem('offset');
+        }
+        this.offset = localStorage.getItem('offset');
         this.dates = dates;
-    };
-
-    window.onbeforeunload = function() {
-        localStorage.removeItem('offset');
-        return '';
     };
 
     window.onunload = function() {
