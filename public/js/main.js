@@ -238,7 +238,7 @@ function CashierController($http) {
 
     this.labels = this.strDates.reverse();
     this.series = ['Потрачено денег'];
-    this.data = [this.counts().reverse()];
+    this.data = [this.counts()];
     this.datasetOverride = [{ yAxisID: 'y-axis-1' }];
     this.options = {
         scales: {
