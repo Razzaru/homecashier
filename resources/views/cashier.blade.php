@@ -41,8 +41,8 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.2/angular-ui-router.js"></script>
-<script src="/node_modules/chart.js/Chart.min.js"></script>
-<script src="/node_modules/angular-chart.js/dist/angular-chart.min.js"></script>
+<script src="/js/libs/chart.min.js"></script>
+<script src="/js/libs/angular-chart.min.js"></script>
 <script src="/js/main.js"></script>
 <script src="/js/router.js"></script>
 </body>

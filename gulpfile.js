@@ -13,7 +13,13 @@ require('laravel-elixir-vue-2');
  |
  */
 
-elixir(mix => {
-    mix.sass('app.scss')
-       .webpack('app.js');
+elixir(function(mix) {
+        mix.copy(
+            'node_modules/angular-chart.js/dist/angular-chart.min.js',
+            'public/js/libs'
+        );
+        mix.copy(
+            'node_modules/chart.js/Chart.min.js',
+            'public/js/libs'
+        );
 });
