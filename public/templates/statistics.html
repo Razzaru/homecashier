@@ -67,20 +67,21 @@
                 <li class="list-group-item">Посуда: {{ cashier.countCat('Посуда') }}</li>
                 <li class="list-group-item">Другое: {{ cashier.countCat('Другое') }}</li>
             </ul>
+            <canvas id="line" class="chart chart-line" chart-data="cashier.data"
+                    chart-labels="cashier.labels" chart-series="cashier.series" chart-options="cashier.options"
+                    chart-dataset-override="cashier.datasetOverride">
+            </canvas>
+            <hr>
             <div class="days hidden-xs hidden-sm">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="">{{cashier.now.toLocaleDateString() }}</a></li>
-                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.log()">{{
+                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.counts()">{{
                         date.toLocaleDateString() }}</a></li>
                 </ul>
 
+                <date-sum></date-sum>
+
                 <div ui-view>
-                    <ul class="list-group" style="margin-top: 30px" ng-show="cashier.getItems(cashier.date).length>0">
-                        <li class="list-group-item" ng-repeat="item in cashier.getItems(cashier.date) track by $index">
-                            {{item.name}}: {{ item.price }} <span class="badge">{{ item.category }}</span></li>
-                        <li class="list-group-item list-group-item-warning">Общая сумма за день: {{ cashier.dayCount() }}
-                        </li>
-                    </ul>
                 </div>
             </div>
         </div>

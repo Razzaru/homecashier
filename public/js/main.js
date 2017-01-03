@@ -1,4 +1,4 @@
-var app = angular.module('cashier', ['ui.router']);
+var app = angular.module('cashier', ['ui.router', 'chart.js']);
 
 app.directive('mainApp', MainApp);
 
@@ -36,6 +36,21 @@ function Statistics() {
         templateUrl: '/templates/statistics.html',
         priority: 1001,
         scope: true,
+        controller: CashierController,
+        controllerAs: 'cashier'
+    };
+}
+;
+
+
+app.directive('dateSum', DateSum);
+
+function DateSum() {
+    return {
+        restrict: 'E',
+        templateUrl: '/templates/date-sum.html',
+        priority: 1002,
+        scope: false,
         controller: CashierController,
         controllerAs: 'cashier'
     };
@@ -105,7 +120,7 @@ function CashierController($http) {
     this.getItems = function (date) {
         var items = [];
         for(var i = 0; i<this.spendingItems.length;i++) {
-            if(new Date(Date.parse(this.spendingItems[i].date)).getDate() === this.now.getDate()) {
+            if(new Date(Date.parse(this.spendingItems[i].date)).getDate() === date.getDate()) {
                 items.push(this.spendingItems[i]);
             }
         }
@@ -116,6 +131,14 @@ function CashierController($http) {
         var count = 0;
         for(var i = 0; i<this.getItems(this.date).length;i++) {
             count += parseInt(this.getItems(this.date)[i].price);
+        }
+        return count;
+    }
+
+    this.dayCountParam = function (date) {
+        var count = 0;
+        for(var i = 0; i<this.getItems(date).length;i++) {
+            count += parseInt(this.getItems(date)[i].price);
         }
         return count;
     }
@@ -168,6 +191,20 @@ function CashierController($http) {
     };
 
     this.dates = this.lastSixDays();
+    
+    this.strDates = this.dates.map(function (item) {
+        return item.toLocaleDateString();
+    })
+    this.strDates.unshift(this.now.toLocaleDateString());
+    
+    this.counts = function () {
+        var dates = this.dates.slice(0);
+        dates.unshift(this.now);
+        var data = dates.map(function (item) {
+            return self.dayCountParam(item);
+        })
+        return data;
+    }
 
     this.percentage = function () {
         var percent = this.monthMoney / 100;
@@ -199,4 +236,21 @@ function CashierController($http) {
         localStorage.removeItem('spendingItems');
         localStorage.setItem('spendingItems', tmp);
     }
+
+    this.labels = this.strDates.reverse();
+    this.series = ['Потрачено денег'];
+    this.data = [this.counts().reverse()];
+    this.datasetOverride = [{ yAxisID: 'y-axis-1' }];
+    this.options = {
+        scales: {
+            yAxes: [
+                {
+                    id: 'y-axis-1',
+                    type: 'linear',
+                    display: true,
+                    position: 'left'
+                }
+            ]
+        }
+    };
 }
