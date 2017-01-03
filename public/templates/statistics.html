@@ -75,7 +75,7 @@
             <div class="days hidden-xs hidden-sm">
                 <ul class="nav nav-tabs">
                     <li class="active"><a href="">{{cashier.now.toLocaleDateString() }}</a></li>
-                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.counts()">{{
+                    <li ng-repeat="date in cashier.dates"><a ng-click="cashier.date=date; cashier.getLastMonth()">{{
                         date.toLocaleDateString() }}</a></li>
                 </ul>
 

@@ -216,7 +216,6 @@ function CashierController($http) {
 
     this.percents = p;
 
-
     this.addItem = function () {
 
         var date = new Date();
@@ -253,4 +252,15 @@ function CashierController($http) {
             ]
         }
     };
+
+    this.getLastMonth = function () {
+        var arr = [];
+        for (var i = 1; i<=31; i++) {
+            var date = new Date();
+            var dd = date.getDate();
+            date.setDate(dd - i);
+            arr.push(date.toLocaleDateString());
+        }
+        return arr;
+    }
 }
